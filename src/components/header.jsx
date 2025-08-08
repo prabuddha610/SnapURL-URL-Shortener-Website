@@ -14,7 +14,7 @@ import { Button } from "./ui/button";
 const Header = () => {
   const navigate = useNavigate();
 
-  const { user} = false;
+  const { user} = true;
 
   return (
     <>
@@ -23,7 +23,7 @@ const Header = () => {
           <img src="/logo.png" className="h-16" alt="Trimrr Logo" />
         </Link>
         <div className="flex gap-4">
-          {!user ? (
+          {user ? (
             <Button onClick={() => navigate("/auth")}>Login</Button>
           ) : (
             <DropdownMenu>
