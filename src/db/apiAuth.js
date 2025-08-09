@@ -1,4 +1,5 @@
-import supabase, {supabaseUrl} from "./supabase";
+import supabase, { supabaseUrl } from "./supabase";
+
 export async function login({ email, password }) {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
@@ -25,7 +26,7 @@ export async function logout() {
   if (error) throw new Error(error.message);
 }
 
-export async function signup({ name, email, password, profilepic}) {
+export async function signup({ name, email, password, profilepic }) {
   const fileName = `dp-${name.split(" ").join("-")}-${Math.random()}`;
 
   const { error: storageError } = await supabase.storage
