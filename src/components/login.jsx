@@ -7,14 +7,22 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import * as Yup from "yup";
 import { Button } from "./ui/button";
-import { BeatLoader } from "react-spinners";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import * as Yup from "yup";
 import Error from "./error";
-import { useState } from "react";
+import { login } from "@/db/apiAuth";
+import { BeatLoader } from "react-spinners";
+import useFetch from "./hooks/useFetch";
 
 
 const Login = () => {
+  let [searchParams] = useSearchParams();
+  const longLink = searchParams.get("createNew");
+
+  const navigate = useNavigate();
+
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     email: "",
@@ -29,6 +37,14 @@ const Login = () => {
     }));
   };
 
+  const { loading, error, fn: fnLogin, data } = useFetch(login, formData);
+  useEffect(() => {
+    if (error === null && data) {
+      navigate(`/dashboard?${longLink ? `createNew=${longLink}` : ""}`);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error, data]);
+
   const handleLogin = async () => {
     setErrors([]);
     try {
@@ -40,7 +56,9 @@ const Login = () => {
           .min(6, "Password must be at least 6 characters")
           .required("Password is required"),
       });
+
       await schema.validate(formData, { abortEarly: false });
+      await fnLogin();
     } catch (e) {
       const newErrors = {};
 
@@ -59,6 +77,7 @@ const Login = () => {
         <CardDescription>
           to your account if you already have one
         </CardDescription>
+        {error && <Error message={error.message} />}
       </CardHeader>
       <CardContent className="space-y-2">
         <div className="space-y-1">
@@ -68,8 +87,8 @@ const Login = () => {
             placeholder="Enter Email"
             onChange={handleInputChange}
           />
-          <Error message={"some error"} />
         </div>
+        {errors.email && <Error message={errors.email} />}
         <div className="space-y-1">
           <Input
             name="password"
@@ -77,12 +96,12 @@ const Login = () => {
             placeholder="Enter Password"
             onChange={handleInputChange}
           />
-          <Error message={"some error"} />
         </div>
+        {errors.password && <Error message={errors.password} />}
       </CardContent>
       <CardFooter>
         <Button onClick={handleLogin}>
-          {true ? <BeatLoader size={10} color="#36d7b7" /> : "Login"}
+          {loading ? <BeatLoader size={10} color="#36d7b7" /> : "Login"}
         </Button>
       </CardFooter>
     </Card>
