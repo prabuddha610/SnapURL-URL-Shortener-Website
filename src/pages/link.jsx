@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Link = () => {
+const LinkPage = () => {
   return (
-    <div>Link</div>
+    <div>LinkPage</div>
   )
 }
 
-export default Link
+export default LinkPage
