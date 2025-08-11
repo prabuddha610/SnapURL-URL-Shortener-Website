@@ -1,17 +1,20 @@
+// can add sonner from shadcn ui after link created
+
 import { useEffect, useState } from "react";
 import { BarLoader } from "react-spinners";
 import { Filter } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { CreateLink } from "@/components/create-link";
+import LinkCard from "@/components/link-card";
 import Error from "@/components/error";
 
 import useFetch from "@/hooks/use-fetch";
 
 import { getUrls } from "@/db/apiUrls";
-import { UrlState } from "@/context";
 import { getClicksForUrls } from "@/db/apiClicks";
-import LinkCard from "@/components/link-card";
+import { UrlState } from "@/context";
 
 const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -63,7 +66,7 @@ const Dashboard = () => {
       </div>
       <div className="flex justify-between">
         <h1 className="text-4xl font-extrabold">My Links</h1>
-
+        <CreateLink />
       </div>
       <div className="relative">
         <Input
