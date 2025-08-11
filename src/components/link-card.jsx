@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import useFetch from "@/hooks/use-fetch";
 import { BeatLoader } from "react-spinners";
+import { deleteUrl } from "@/db/apiUrls";
 
 const LinkCard = ({ url = [], fetchUrls }) => {
   const downloadImage = () => {
@@ -24,7 +25,7 @@ const LinkCard = ({ url = [], fetchUrls }) => {
     document.body.removeChild(anchor);
   };
 
-  const { loading: loadingDelete, fn: fnDelete } = useFetch(url.id);
+  const {loading: loadingDelete, fn: fnDelete} = useFetch(deleteUrl, url.id);
 
   return (
     <div className="flex flex-col md:flex-row gap-5 border p-4 bg-gray-900 rounded-lg">
