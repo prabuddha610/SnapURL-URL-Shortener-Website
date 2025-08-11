@@ -53,7 +53,7 @@ const LinkCard = ({ url = [], fetchUrls }) => {
         <Button
           variant="ghost"
           onClick={() =>
-            navigator.clipboard.writeText(`https://trimrr.in/${url?.short_url}`)
+            navigator.clipboard.writeText(`https://snapurl.in/${url?.short_url}`)
           }
         >
           <Copy />
